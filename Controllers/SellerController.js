@@ -59,8 +59,8 @@ const login = async (req,res)=>{
       } else {
         if(bcrypt.compareSync(data.password,seller.password))
         {
-            const accesToken = jwt.generateAccessToken(seller.email)
-            res.status(200).send({accesToken:accesToken,sellerId:seller.id}); 
+            const accesToken = jwt.generateAccessToken(seller.id)
+            res.status(200).send({accesToken:accesToken}); 
         }else{
             res.status(404).send("you entered wrong password"); 
         }

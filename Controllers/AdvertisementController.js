@@ -6,7 +6,7 @@ const { Op } = require("sequelize");
 
 //function for add advertisement
 const addAdvertisment = async (req,res) =>{
-
+        console.log(req.data);
     if(!req.body.topic){
         res.status(404).send("topic cannot be blank")
     }
@@ -19,7 +19,7 @@ const addAdvertisment = async (req,res) =>{
     else if (!req.file) {
         res.status(404).send("Image file not  upload")
     }
-    else if (!req.body.sellerId) {
+    else if (!req.data) {
         res.status(404).send("sellerId cannot be null")
     }
     else if (!req.body.categoryId) {
@@ -27,7 +27,7 @@ const addAdvertisment = async (req,res) =>{
     }
     else{
 
-        const seller = await Seller.count({where:{id:req.body.sellerId}})
+        const seller = await Seller.count({where:{id:req.data}})
         if(seller === 0){
             return res.status(404).send("please check sellerId")
         }
@@ -35,13 +35,13 @@ const addAdvertisment = async (req,res) =>{
         if(category === 0){
             return res.status(404).send("please check categoryId")
         }
-        var imgsrc = 'http://127.0.0.1:5000/Images/' + req.file.filename
+        var imgsrc = 'http://127.0.0.1:5000/' + req.file.filename
         const data ={
             topic:req.body.topic,
             description:req.body.description,
             price:req.body.price,
             img:imgsrc,
-            sellerId:req.body.sellerId, 
+            sellerId:req.data, 
             categoryId:req.body.categoryId
         }
 
@@ -56,7 +56,7 @@ const addAdvertisment = async (req,res) =>{
 }
 //function for get(Spcefic user)advertisement
 const getAdvertisment = async (req,res) =>{
-    const {id} = req.params
+    const id = req.data
    await Advertisment.findAll({where:{sellerId:id},attributes:["id","topic","description","img","price"]}).then((result)=>{
             if(result.length > 0){
                 res.status(200).send(result)
@@ -117,8 +117,7 @@ const updateAdvertisment = async (req,res) =>{
         if(category === 0){
             return res.status(404).send("please check categoryId")
         }
-
-        var imgsrc = 'http://127.0.0.1:5000/Images/' + req.file.filename
+        var imgsrc = 'http://127.0.0.1:5000/' + req.file.filename
         const id = req.body.id
         const data ={
             topic:req.body.topic,

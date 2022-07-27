@@ -6,7 +6,7 @@ var path = require('path')
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './Images')
+    cb(null, './public')
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname)) 
@@ -21,7 +21,7 @@ const AdvertisementController = require('../Controllers/AdvertisementController.
 router.post('/seller/adertisment/add',auth.authenticateToken,upload.single('image'),AdvertisementController.addAdvertisment)
 
 //route for get(Spcefic user)Advertisement
-router.get('/seller/adertisment/:id',auth.authenticateToken,AdvertisementController.getAdvertisment)
+router.get('/seller/adertisment/',auth.authenticateToken,AdvertisementController.getAdvertisment)
 
 //route for edit Advertisement
 router.get('/seller/adertisment/edit/:id',auth.authenticateToken,AdvertisementController.editSpecificAdvertisment)

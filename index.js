@@ -28,9 +28,16 @@ app.use('/api/seller',sellerRouter)
 const AdvertisementRouter = require('./Routers/AdvertisementRouter.js')
 app.use('/api',AdvertisementRouter)
 
+
+app.get('/',(req,res)=>{
+    res.status(200).send("wellcome")
+})
+app.use(express.static('public'))
+
 app.all('*',(req,res)=>{
     res.status(404).send("Page Not found")
 })
+
 
 //create server
 app.listen(process.env.SERVER_PORT,()=>{
