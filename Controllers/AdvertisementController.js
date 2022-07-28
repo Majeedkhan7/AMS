@@ -35,7 +35,7 @@ const addAdvertisment = async (req,res) =>{
         if(category === 0){
             return res.status(404).send("please check categoryId")
         }
-        var imgsrc = 'http://127.0.0.1:5000/' + req.file.filename
+        var imgsrc = 'http://127.0.0.1:5000/images/' + req.file.filename
         const data ={
             topic:req.body.topic,
             description:req.body.description,
@@ -117,7 +117,7 @@ const updateAdvertisment = async (req,res) =>{
         if(category === 0){
             return res.status(404).send("please check categoryId")
         }
-        var imgsrc = 'http://127.0.0.1:5000/' + req.file.filename
+        var imgsrc = 'http://127.0.0.1:5000/images/' + req.file.filename
         const id = req.body.id
         const data ={
             topic:req.body.topic,
@@ -159,7 +159,7 @@ const DeleteAdvertisment = async (req,res) =>{
 
     
 }
-//function for Get All Advertisement
+//function for Get All Advertisement 
 const getAllAdvertisment = async (req,res) =>{
 
     const page = parseInt(req.query.page)
