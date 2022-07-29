@@ -35,7 +35,7 @@ app.get('/',(req,res)=>{
 app.use(express.static('public'))
 
 app.all('*',(req,res)=>{
-    res.status(404).send("Page Not found")
+    res.status(500).send("Page Not found")
 })
 
 

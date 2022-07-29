@@ -12,7 +12,7 @@ const addcategory = async (req,res) =>{
             res.status(200).send("Successfully Category Created")
         
         }).catch((error)=>{
-            res.status(404).send(error.errors[0].message)
+            res.status(500).send(error.errors[0].message)
         })
 
 }

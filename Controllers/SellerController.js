@@ -30,7 +30,7 @@ const addSeller = async (req,res)=>{
             res.status(200).send("Successfully Registered")
         
         }).catch((error)=>{
-            res.status(404).send(error.errors[0].message)
+            res.status(500).send(error.errors[0].message)
         })
     }else{
         res.send('this email already exists!');
@@ -42,10 +42,10 @@ const addSeller = async (req,res)=>{
 const login = async (req,res)=>{
 
     if(!req.body.email){
-        return res.status(404).send("email cannot be blank"); 
+        return res.status(500).send("email cannot be blank"); 
      }
     if(!req.body.password){
-       return res.status(404).send("password cannot be blank"); 
+       return res.status(500).send("password cannot be blank"); 
     }
     
     const data ={
@@ -62,7 +62,7 @@ const login = async (req,res)=>{
             const accesToken = jwt.generateAccessToken(seller.id)
             res.status(200).send({accesToken:accesToken}); 
         }else{
-            res.status(404).send("you entered wrong password"); 
+            res.status(500).send("you entered wrong password"); 
         }
         
       }

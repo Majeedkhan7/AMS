@@ -8,32 +8,32 @@ const { Op } = require("sequelize");
 const addAdvertisment = async (req,res) =>{
         console.log(req.data);
     if(!req.body.topic){
-        res.status(404).send("topic cannot be blank")
+        res.status(500).send("topic cannot be blank")
     }
     else if (!req.body.description) {
-        res.status(404).send("description cannot be blank")
+        res.status(500).send("description cannot be blank")
     }
     else if (!req.body.price) {
-        res.status(404).send("price cannot be blank")
+        res.status(500).send("price cannot be blank")
     }
     else if (!req.file) {
-        res.status(404).send("Image file not  upload")
+        res.status(500).send("Image file not  upload")
     }
     else if (!req.data) {
-        res.status(404).send("sellerId cannot be null")
+        res.status(500).send("sellerId cannot be null")
     }
     else if (!req.body.categoryId) {
-        res.status(404).send("categoryId cannot be null")
+        res.status(500).send("categoryId cannot be null")
     }
     else{
 
         const seller = await Seller.count({where:{id:req.data}})
         if(seller === 0){
-            return res.status(404).send("please check sellerId")
+            return res.status(500).send("please check sellerId")
         }
         const category = await Category.count({where:{id:req.body.categoryId}})
         if(category === 0){
-            return res.status(404).send("please check categoryId")
+            return res.status(500).send("please check categoryId")
         }
         var imgsrc = 'http://127.0.0.1:5000/images/' + req.file.filename
         const data ={
@@ -49,7 +49,7 @@ const addAdvertisment = async (req,res) =>{
             res.status(200).send("Successfully added")
         
         }).catch((error)=>{
-            res.status(404).send(error)
+            res.status(500).send(error)
         })
 
     }
@@ -67,7 +67,7 @@ const getAdvertisment = async (req,res) =>{
          
         
         }).catch((error)=>{
-            res.status(404).send(error)
+            res.status(500).send(error)
         })
 
     
@@ -88,7 +88,7 @@ await Advertisment.findAll(
         }
      
      }).catch((error)=>{
-         res.status(404).send(error)
+         res.status(500).send(error)
      })
 
  
@@ -98,24 +98,24 @@ await Advertisment.findAll(
 const updateAdvertisment = async (req,res) =>{
 
     if(!req.body.topic){
-        res.status(404).send("topic cannot be blank")
+        res.status(500).send("topic cannot be blank")
     }
     else if (!req.body.description) {
-        res.status(404).send("description cannot be blank")
+        res.status(500).send("description cannot be blank")
     }
     else if (!req.body.price) {
-        res.status(404).send("price cannot be blank")
+        res.status(500).send("price cannot be blank")
     }
     else if (!req.file) {
-        res.status(404).send("Image file not  upload")
+        res.status(500).send("Image file not  upload")
     }
     else if (!req.body.categoryId) {
-        res.status(404).send("categoryId cannot be null")
+        res.status(500).send("categoryId cannot be null")
     }
     else {
         const category = await Category.count({where:{id:req.body.categoryId}})
         if(category === 0){
-            return res.status(404).send("please check categoryId")
+            return res.status(500).send("please check categoryId")
         }
         var imgsrc = 'http://127.0.0.1:5000/images/' + req.file.filename
         const id = req.body.id
@@ -131,7 +131,7 @@ const updateAdvertisment = async (req,res) =>{
             res.status(200).send("Successfully updated")
         
         }).catch((error)=>{
-            res.status(404).send(error)
+            res.status(500).send(error)
         })
 
     }
@@ -143,13 +143,13 @@ const DeleteAdvertisment = async (req,res) =>{
     const {id} = req.params
     await Advertisment.findOne({where:{id:id}}).then((result)=>{
         if(result === null){
-            return res.status(404).send("data not found")
+            return res.status(500).send("data not found")
         }else[
              Advertisment.destroy({where:{id:id}}).then(()=>{
                 res.status(200).send("Successfully Deleted")
            
            }).catch((error)=>{
-               res.status(404).send(error)
+               res.status(500).send(error)
            })
         ]
     })
@@ -177,7 +177,7 @@ const getAllAdvertisment = async (req,res) =>{
      })
     }
     else{
-        res.status(404).send("no data available")
+        res.status(500).send("no data available")
     }
           
     
@@ -204,12 +204,12 @@ const getSpecificAdvertisment = async (req,res) =>{
         if(result.length > 0){
             res.status(200).send(result)
         }else{
-            res.status(404).send("no data available")
+            res.status(500).send("no data available")
         }
   
          
          }).catch((error)=>{
-             res.status(404).send(error.errors[0].message)
+             res.status(500).send(error.errors[0].message)
          })
  
      
@@ -242,7 +242,7 @@ const searchAdvertisment = async (req,res) =>{
         })
        }
        else{
-           res.status(404).send("no data available")
+           res.status(500).send("no data available")
        }   
 
  
