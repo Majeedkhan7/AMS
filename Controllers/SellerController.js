@@ -9,6 +9,27 @@ const jwt = require('../jwt/index.js')
 // Reister the Seller
 const addSeller = async (req,res)=>{
 
+    if(!req.body.fullname){
+        return res.status(500).send("fullname  is required"); 
+     }
+    if(!req.body.address){
+       return res.status(500).send("address  is required"); 
+    }
+    if(!req.body.email){
+        return res.status(500).send("email  is required"); 
+     }
+    if(!req.body.password){
+       return res.status(500).send("password  is required"); 
+    }
+    if(!req.body.city){
+        return res.status(500).send("city  is required"); 
+     }
+    if(!req.body.telephoneNumber){
+       return res.status(500).send("telephoneNumber  is required"); 
+    }
+
+
+
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(req.body.password, salt);
 
@@ -30,7 +51,7 @@ const addSeller = async (req,res)=>{
             res.status(200).send("Successfully Registered")
         
         }).catch((error)=>{
-            res.status(500).send(error.errors[0].message)
+            res.status(500).send(error)
         })
     }else{
         res.send('this email already exists!');
@@ -42,10 +63,10 @@ const addSeller = async (req,res)=>{
 const login = async (req,res)=>{
 
     if(!req.body.email){
-        return res.status(500).send("email cannot be blank"); 
+        return res.status(500).send("email  is required"); 
      }
     if(!req.body.password){
-       return res.status(500).send("password cannot be blank"); 
+       return res.status(500).send("password  is required"); 
     }
     
     const data ={
@@ -61,7 +82,7 @@ const login = async (req,res)=>{
         {
             const accesToken = jwt.generateAccessToken(seller.id)
             res.status(200).send({accesToken:accesToken}); 
-        }else{
+        }else{ 
             res.status(500).send("you entered wrong password"); 
         }
         
@@ -70,7 +91,7 @@ const login = async (req,res)=>{
 
 
 
- 
+  
 module.exports ={
     addSeller,
     login

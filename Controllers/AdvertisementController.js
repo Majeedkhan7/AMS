@@ -8,13 +8,13 @@ const { Op } = require("sequelize");
 const addAdvertisment = async (req,res) =>{
         console.log(req.data);
     if(!req.body.topic){
-        res.status(500).send("topic cannot be blank")
+        res.status(500).send("topic is required")
     }
     else if (!req.body.description) {
-        res.status(500).send("description cannot be blank")
+        res.status(500).send("description  is required")
     }
     else if (!req.body.price) {
-        res.status(500).send("price cannot be blank")
+        res.status(500).send("price  is required")
     }
     else if (!req.file) {
         res.status(500).send("Image file not  upload")

@@ -44,4 +44,4 @@ db.sequelize.sync({
     console.log(`sync done`);
 })
 
-module.exports = db
+module.exports = db 
